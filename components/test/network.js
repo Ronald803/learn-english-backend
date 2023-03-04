@@ -4,13 +4,15 @@ const controller = require('./controller')
 
 router.get('/',(req,res)=>{
     controller.getQuestion()
-        .then( (questions)=>{
-            res.send(questions)
+        .then( (exercise)=>{
+            res.send(exercise)
         } )
         .catch()
 });
 router.post('/',(req,res)=>{
-    controller.addQuestion()
+    const {question,a,b,c,d,e,answer,test} = req.body;
+    console.log(question,a,b,c,d,e,answer,test);
+    controller.addQuestion(question,a,b,c,d,e,answer,test)
         .then( (questions)=>{
             res.send(questions)
         } )

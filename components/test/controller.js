@@ -1,12 +1,16 @@
-
-function addQuestion(){
+const store = require('./store')
+function addQuestion(question,a,b,c,d,e,answer,test){
     return new Promise((resolve,reject)=>{
-        resolve('Peticion post a api/test, respuesta desde controller')
+        const exercise = {
+            question,a,b,c,d,e,answer,test
+        }
+        store.add(exercise);
+        resolve(exercise);
     })
 };
 function getQuestion(){
     return new Promise((resolve,reject)=>{
-        resolve('Peticion get a api/test, respuesta desde controller')
+        resolve(store.list())
     })
 }
 function updateQuestion(){
