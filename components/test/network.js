@@ -18,14 +18,14 @@ router.post('/',(req,res)=>{
         } )
         .catch()
 });
-router.put('/',(req,res)=>{
-    const {answer,_id} = req.body;
-    console.log(answer,_id);
-    controller.checkAnswer(answer,_id)
-        .then( (questions)=>{
-            res.send(questions)
-        } )
-        .catch()
+router.put('/', async(req,res)=>{
+    const {test} = req.body;
+    let califications = await Promise.all(
+        test.map( (exercise) => {
+            return controller.checkAnswer(exercise.answer,exercise._id)
+        })
+    )
+    res.send(califications)
 });
 router.delete('/',(req,res)=>{
     controller.deleteQuestion()

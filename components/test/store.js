@@ -6,7 +6,6 @@ async function list(filter){
 }
 async function add(exercise){
     const newQuestion = new Model(exercise);
-    console.log("llega a store");
     newQuestion.save();
 }
 

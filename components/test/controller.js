@@ -18,15 +18,17 @@ function checkAnswer(answer,_id){
         const question = await store.list({_id: _id})
         let respuesta
         if(question[0].answer===answer){
-            respuesta = "Respuesta correcta"
+            respuesta = "Correcto"
         } else {
-            respuesta = "Respuesta incorrecta"
+            respuesta = "Incorrecto"
         }
-        console.log(question[0]);
-        resolve({
+        //console.log(question[0]);
+        resolve(
+            {
             exercise: question[0],
             respuesta
-        })
+            }
+        )
     })
 }
 function deleteQuestion(){
