@@ -13,9 +13,20 @@ function getQuestion(){
         resolve(store.list())
     })
 }
-function updateQuestion(){
-    return new Promise((resolve,reject)=>{
-        resolve('Peticion update a api/test, respuesta desde controller')
+function checkAnswer(answer,_id){
+    return new Promise(async (resolve,reject)=>{
+        const question = await store.list({_id: _id})
+        let respuesta
+        if(question[0].answer===answer){
+            respuesta = "Respuesta correcta"
+        } else {
+            respuesta = "Respuesta incorrecta"
+        }
+        console.log(question[0]);
+        resolve({
+            exercise: question[0],
+            respuesta
+        })
     })
 }
 function deleteQuestion(){
@@ -24,4 +35,4 @@ function deleteQuestion(){
     })
 }
 
-module.exports = {addQuestion,getQuestion,updateQuestion,deleteQuestion}
+module.exports = {addQuestion,getQuestion,checkAnswer,deleteQuestion}

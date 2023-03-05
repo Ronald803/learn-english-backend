@@ -19,7 +19,9 @@ router.post('/',(req,res)=>{
         .catch()
 });
 router.put('/',(req,res)=>{
-    controller.updateQuestion()
+    const {answer,_id} = req.body;
+    console.log(answer,_id);
+    controller.checkAnswer(answer,_id)
         .then( (questions)=>{
             res.send(questions)
         } )
