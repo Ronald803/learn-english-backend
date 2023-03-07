@@ -1,5 +1,5 @@
 const test = require('../components/test/network')
-
+const user = require('../components/users/network')
 const routes = function(server){
     server.use('/api/test',test);
     server.use('/api/student',(req,res)=>{
@@ -8,6 +8,7 @@ const routes = function(server){
     server.use('/api/teacher',(req,res)=>{
         res.send('petición a teachers')
     });
+    server.use('/api/users',user)
 }
 
 module.exports = routes
