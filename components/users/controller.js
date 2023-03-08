@@ -1,31 +1,34 @@
 const store = require('./store')
-function addUser(name,email,cellphone,level,schedule){
+function addUser(name,email,cellphone,level,schedule,password){
     return new Promise( (resolve,reject)=>{
         const user = {
-            name,email,cellphone,level,schedule,
+            name,email,cellphone,level,schedule, password,
             points: [],
-            rol: "student"
+            rol: "student",
+            characteristic: "created"
         }
         store.add(user);
         resolve(user)
     } )
 }
 
-function getUser(){
+function getUser(filter){
     return new Promise( (resolve,reject)=>{
-        resolve('Petición getUser desde controller')
+        resolve(store.list(filter))
     } )
 }
 
-function updateUser(){
-    return new Promise( (resolve,reject)=>{
-        resolve('Petición updateUser desde controller')
+function updateUser(id,body){
+    return new Promise( async (resolve,reject)=>{
+        const updatedUser = await store.update(id,body)
+        resolve(updatedUser)
     } )
 }
 
-function deleteUser(){
-    return new Promise( (resolve,reject)=>{
-        resolve('Peteición deleteUser desde controller')
+function deleteUser(id){
+    return new Promise( async (resolve,reject)=>{
+        const deletedUser = await store.remove(id)
+        resolve(deletedUser)
     } )
 }
 module.exports = {addUser,getUser,updateUser,deleteUser}

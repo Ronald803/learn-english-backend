@@ -7,6 +7,10 @@ const mySchema = new Schema({
         type: String,
         required: true
     },
+    password:{
+        type: String,
+        required: true
+    },
     cellphone: {
         type: Number,
         required: true 
@@ -20,11 +24,19 @@ const mySchema = new Schema({
         required: true
     },
     level: {
-        type: Array,
+        type: String,
         required: true
     },
     schedule: {
-        type: Array,
+        type: String,
+        required: true
+    },
+    rol: {
+        type: String,
+        required: true
+    },
+    characteristic:{
+        type: String,
         required: true
     }
 })
