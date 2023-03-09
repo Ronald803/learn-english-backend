@@ -1,8 +1,14 @@
 const store = require('./store')
+const bcryptjs = require('bcryptjs')
 function addUser(name,email,cellphone,level,schedule,password){
     return new Promise( (resolve,reject)=>{
+        //____________________encrypting password__________________
+        const salt = bcryptjs.genSaltSync();
+        const encryptPassword =  bcryptjs.hashSync( password,salt )
+        //_________________________________________________________
         const user = {
-            name,email,cellphone,level,schedule, password,
+            name,email,cellphone,level,schedule, 
+            password: encryptPassword,
             points: [],
             rol: "student",
             characteristic: "created"

@@ -27,7 +27,7 @@ router.post('/',(req,res)=>{
 router.put('/:id',(req,res)=>{
     controller.updateUser(req.params.id,req.body)
         .then(updatedUser=>{
-            response.success(req,res,"Información de usuario actualizado correctamente",updatedUser,200)
+            response.success(req,res,"Información de usuario actualizada correctamente",updatedUser,200)
         })
         .catch(e=>{
             response.error(req,res,"Error interno",500,e)
@@ -37,9 +37,11 @@ router.put('/:id',(req,res)=>{
 router.delete('/:id',(req,res)=>{
     controller.deleteUser(req.params.id)
         .then( deletedUser=>{
-            res.send(deletedUser)
+            response.success(req,res,"Usuario eliminado",deletedUser,200)
         } )
-        .catch()
+        .catch( e=>{
+            response.error(req,res,"Error interno",500,e)
+        })
 })
 
 module.exports = router;
