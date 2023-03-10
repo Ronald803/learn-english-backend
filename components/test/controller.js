@@ -1,8 +1,8 @@
 const store = require('./store')
-function addQuestion(question,a,b,c,d,e,answer,test){
+function addQuestion(question,answers,test,response){
     return new Promise((resolve,reject)=>{
         const exercise = {
-            question,a,b,c,d,e,answer,test
+            question,answers,test,response
         }
         store.add(exercise);
         resolve(exercise);
@@ -13,11 +13,11 @@ function getQuestion(){
         resolve(store.list())
     })
 }
-function checkAnswer(answer,_id){
+function checkAnswer(response,_id){
     return new Promise(async (resolve,reject)=>{
         const question = await store.list({_id: _id})
         let respuesta
-        if(question[0].answer===answer){
+        if(question[0].response===response){
             respuesta = "Correcto"
         } else {
             respuesta = "Incorrecto"
@@ -26,7 +26,8 @@ function checkAnswer(answer,_id){
         resolve(
             {
             exercise: question[0],
-            respuesta
+            respuesta,
+            response
             }
         )
     })

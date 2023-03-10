@@ -4,15 +4,18 @@ const controller = require('./controller')
 
 router.get('/',(req,res)=>{
     controller.getQuestion()
-        .then( (exercise)=>{
-            res.send(exercise)
-        } )
+        .then(questions=>{
+            questions.map( q=>{
+                q.response = ""
+            } )
+            res.send(questions)
+        })
         .catch()
 });
 router.post('/',(req,res)=>{
-    const {question,a,b,c,d,e,answer,test} = req.body;
-    console.log(question,a,b,c,d,e,answer,test);
-    controller.addQuestion(question,a,b,c,d,e,answer,test)
+    const {question,answers,test,response} = req.body;
+    console.log(question,answers,test,response);
+    controller.addQuestion(question,answers,test,response)
         .then( (questions)=>{
             res.send(questions)
         } )
@@ -22,7 +25,7 @@ router.put('/', async(req,res)=>{
     const {test} = req.body;
     let califications = await Promise.all(
         test.map( (exercise) => {
-            return controller.checkAnswer(exercise.answer,exercise._id)
+            return controller.checkAnswer(exercise.response,exercise._id)
         })
     )
     res.send(califications)

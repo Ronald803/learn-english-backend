@@ -7,35 +7,18 @@ const mySchema = new Schema({
         type: String,
         required: true
     },
-    a: {
-        type: String,
-        required: true
-    },
-    b: {
-        type: String,
-        required: true
-    },
-    c: {
-        type: String,
-        required: true
-    },
-    d: {
-        type: String,
-        required: true
-    },
-    e: {
-        type: String,
-        required: true
-    },
-    answer: {
-        type: String,
+    answers: {
+        type: Array,
         required: true
     },
     test: {
         type: Number,
         required: true
+    },
+    response: {
+        type: String,
+        required: true
     }
-
 })
 
 const model = mongoose.model('Exercise',mySchema)
