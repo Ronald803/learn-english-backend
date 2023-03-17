@@ -2,7 +2,8 @@ const Model = require('./model')
 
 async function add(user){
     const newUser = new Model(user);
-    newUser.save();
+    const userSaved = newUser.save();
+    return userSaved
 }
 async function list(filter){
     const users = await Model.find(filter)

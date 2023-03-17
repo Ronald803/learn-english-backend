@@ -1,8 +1,9 @@
 const express  = require('express');
+const { validarJWT } = require('../../middlewares/validarJWT');
 const router = express.Router();
 const controller = require('./controller')
 
-router.get('/',(req,res)=>{
+router.get('/',validarJWT(),(req,res)=>{
     controller.getQuestion()
         .then(questions=>{
             questions.map( q=>{
@@ -12,7 +13,7 @@ router.get('/',(req,res)=>{
         })
         .catch()
 });
-router.post('/',(req,res)=>{
+router.post('/',validarJWT('teacher'),(req,res)=>{
     const {question,answers,test,response} = req.body;
     console.log(question,answers,test,response);
     controller.addQuestion(question,answers,test,response)
@@ -21,7 +22,7 @@ router.post('/',(req,res)=>{
         } )
         .catch()
 });
-router.put('/', async(req,res)=>{
+router.put('/',validarJWT('teacher'), async(req,res)=>{
     const {test} = req.body;
     let califications = await Promise.all(
         test.map( (exercise) => {
@@ -30,7 +31,7 @@ router.put('/', async(req,res)=>{
     )
     res.send(califications)
 });
-router.delete('/',(req,res)=>{
+router.delete('/',validarJWT('admin'),(req,res)=>{
     controller.deleteQuestion()
         .then( (questions)=>{
             res.send(questions)

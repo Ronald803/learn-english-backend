@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('./controller')
-const response = require('../../network/response')
+const response = require('../../network/response');
+const { validarJWT } = require('../../middlewares/validarJWT');
 
-router.get('/',(req,res)=>{
+router.get('/',validarJWT('admin'),(req,res)=>{
     controller.getUser(req.query)
         .then( users =>{
             response.success(req,res,users.length,users,200)
@@ -24,7 +25,7 @@ router.post('/',(req,res)=>{
         })
 })
 
-router.put('/:id',(req,res)=>{
+router.put('/:id',validarJWT(),(req,res)=>{
     controller.updateUser(req.params.id,req.body)
         .then(updatedUser=>{
             response.success(req,res,"Información de usuario actualizada correctamente",updatedUser,200)
@@ -34,7 +35,7 @@ router.put('/:id',(req,res)=>{
         })
 })
 
-router.delete('/:id',(req,res)=>{
+router.delete('/:id',validarJWT('admin'),(req,res)=>{
     controller.deleteUser(req.params.id)
         .then( deletedUser=>{
             response.success(req,res,"Usuario eliminado",deletedUser,200)

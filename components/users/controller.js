@@ -1,7 +1,9 @@
-const store = require('./store')
-const bcryptjs = require('bcryptjs')
+const store     = require('./store')
+const bcryptjs  = require('bcryptjs')
+const jwt       = require('jsonwebtoken')
+
 function addUser(name,email,cellphone,level,schedule,password){
-    return new Promise( (resolve,reject)=>{
+    return new Promise( async (resolve,reject)=>{
         //____________________encrypting password__________________
         const salt = bcryptjs.genSaltSync();
         const encryptPassword =  bcryptjs.hashSync( password,salt )
@@ -13,8 +15,16 @@ function addUser(name,email,cellphone,level,schedule,password){
             rol: "student",
             characteristic: "created"
         }
-        store.add(user);
-        resolve(user)
+        //____________________saving in data base__________________
+        const userSaved = await store.add(user);
+        //____________________generating jwtoken___________________
+        const payload = {uid: userSaved._id}
+        const token = jwt.sign(payload,process.env.SECRETORPRIVATEKEY,{expiresIn: '4h'})
+        resolve({
+            name: userSaved.name,
+            rol: userSaved.rol,
+            token
+        })
     } )
 }
 

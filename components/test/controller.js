@@ -16,18 +16,18 @@ function getQuestion(){
 function checkAnswer(response,_id){
     return new Promise(async (resolve,reject)=>{
         const question = await store.list({_id: _id})
-        let respuesta
+        let result
         if(question[0].response===response){
-            respuesta = "Correcto"
+            result = "Correct"
         } else {
-            respuesta = "Incorrecto"
+            result = "Incorrect"
         }
         //console.log(question[0]);
         resolve(
             {
-            exercise: question[0],
-            respuesta,
-            response
+            "_id": question[0]._id,
+            correctAnswer: question[0].response,
+            result,
             }
         )
     })
