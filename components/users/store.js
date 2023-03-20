@@ -22,4 +22,9 @@ async function remove(id){
     const deletedUser = foundUser.save();
     return deletedUser;
 }
-module.exports = {add,list,update,remove}
+async function addPoints(id,object){
+    const foundUser = await Model.findById(id);
+    foundUser.points.push(object);
+    foundUser.save()
+}
+module.exports = {add,list,update,remove,addPoints}

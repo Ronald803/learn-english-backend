@@ -47,4 +47,9 @@ function deleteUser(id){
         resolve(deletedUser)
     } )
 }
+
+function updateRecord(userID,test){
+    
+
+}
 module.exports = {addUser,getUser,updateUser,deleteUser}

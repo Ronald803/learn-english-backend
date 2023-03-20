@@ -1,8 +1,8 @@
 const { response,request } = require('express');
 const jwt = require('jsonwebtoken')
-const User = require('../components/users/model')
+const Model = require('../components/users/model')
 
-const validarJWT = (rol)=>{
+const validateJWT = (rol)=>{
     return async (req=request,res=response,next)=>{
         const token = req.header('x-token')
         if(!token){
@@ -12,9 +12,8 @@ const validarJWT = (rol)=>{
         }
         try{
             const { uid } = jwt.verify( token, process.env.SECRETORPRIVATEKEY);
-            //console.log({uid});
-            const user = await User.findById(uid);
-            console.log({user});
+            const user = await Model.findById(uid);
+            //console.log({user});
             if(!user || user.characteristic==='deleted'){
                 return res.status(401).json({
                     msg: 'Invalid Token or Disabled User'
@@ -25,6 +24,7 @@ const validarJWT = (rol)=>{
                     msg: 'You do not have permission for this operation'
                 })
             }
+            req.user = user;
             next();
         } catch(error) {
             res.status(401).json({
@@ -34,6 +34,7 @@ const validarJWT = (rol)=>{
         }
     }
 }
+
 module.exports = {
-    validarJWT
+    validateJWT
 }
