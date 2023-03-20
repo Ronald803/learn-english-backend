@@ -14,7 +14,7 @@ function login(email,password){
         if(!validPassword){return reject('Información incorrecta')}
         //__________________ generating jwtoken _______________________
         const payload = {uid: user[0]._id}
-        const token = "123"//jwt.sign(payload,process.env.SECRETORPRIVATEKEY,{expiresIn: '4h'})
+        const token = jwt.sign(payload,process.env.SECRETORPRIVATEKEY,{expiresIn: '4h'})
         resolve({
             name: user[0].name,
             rol: user[0].rol,
