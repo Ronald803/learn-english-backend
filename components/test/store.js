@@ -1,12 +1,13 @@
-const Model = require('./model')
+const Model = require('./model');
+
+async function add(test){
+    const newTest = new Model(test);
+    newTest.save();
+}
 
 async function list(filter){
-    const exercise = await Model.find(filter)
-    return exercise
-}
-async function add(exercise){
-    const newQuestion = new Model(exercise);
-    newQuestion.save();
+    const tests = await Model.find(filter)
+    return tests
 }
 
-module.exports = {list,add}
+module.exports = { add,list }

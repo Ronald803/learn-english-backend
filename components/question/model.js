@@ -3,27 +3,23 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const mySchema = new Schema({
-    name: {
+    question: {
         type: String,
         required: true
     },
-    number: {
+    answers: {
+        type: Array,
+        required: true
+    },
+    test: {
         type: Number,
         required: true
     },
-    description: {
-        type: String,
-        required: true
-    },
-    level: {
-        type: String,
-        required: true
-    },
-    teacher: {
+    response: {
         type: String,
         required: true
     }
 })
 
-const model     = mongoose.model('Test',mySchema)
-module.exports  = model
+const model = mongoose.model('Exercise',mySchema)
+module.exports = model
