@@ -22,6 +22,10 @@ const mySchema = new Schema({
     teacher: {
         type: String,
         required: true
+    },
+    questions: {
+        type: Number,
+        required: true
     }
 })
 

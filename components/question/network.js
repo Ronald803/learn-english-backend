@@ -4,7 +4,7 @@ const router = express.Router();
 const controller = require('./controller')
 
 router.get('/',validateJWT(),(req,res)=>{
-    controller.getQuestion()
+    controller.getQuestion(req.query)
         .then(questions=>{
             questions.map( q=>{
                 q.response = ""
@@ -37,7 +37,8 @@ router.put('/',validateJWT(), async(req,res)=>{
             points++
         }
     })
-    controller.addPoints(foundUser._id,points,1)
+    console.log({califications},califications[0].test);
+    controller.addPoints(foundUser._id,points,califications[0].test)
     res.send(califications)
 });
 router.delete('/',validateJWT('admin'),(req,res)=>{

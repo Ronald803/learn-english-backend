@@ -9,9 +9,9 @@ function addQuestion(question,answers,test,response){
         resolve(exercise);
     })
 };
-function getQuestion(){
+function getQuestion(filter){
     return new Promise((resolve,reject)=>{
-        resolve(store.list())
+        resolve(store.list(filter))
     })
 }
 function checkAnswer(response,_id,userID){
@@ -25,12 +25,13 @@ function checkAnswer(response,_id,userID){
         } else {
             result = "Incorrect"
         }
-        //console.log(question[0]);
+        console.log(question[0]);
         resolve(
             {
             "_id": question[0]._id,
             correctAnswer: question[0].response,
             result,
+            test: question[0].test
             }
         )
     })

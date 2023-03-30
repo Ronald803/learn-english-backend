@@ -5,9 +5,9 @@ const controller        = require('./controller')
 const response          = require('../../network/response')
 
 router.post('/',validateJWT('teacher'),(req,res)=>{
-    const {name,number,description,level} = req.body
+    const {name,number,description,level,questions} = req.body
     const teacher = req.user.name
-    controller.addTest(name,number,description,level,teacher)
+    controller.addTest(name,number,description,level,teacher,questions)
         .then( addedTest => {
             response.success(req,res,"Test añadido correctamente",addedTest,201)
         } )

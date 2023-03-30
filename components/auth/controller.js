@@ -4,7 +4,7 @@ const storeUser = require('../users/store')
 function login(email,password){
     return new Promise( async(resolve,reject)=>{
         if(!email || !password){return reject('Incomplete data')}
-        //__________________ Checking email exits _____________________
+        //__________________ Checking email exists _____________________
         const user = await storeUser.list({email})
         if(user.length<1){return reject('Información incorrecta')}
         //__________________ Checking user is active __________________
