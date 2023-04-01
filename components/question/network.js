@@ -2,11 +2,22 @@ const express  = require('express');
 const { validateJWT } = require('../../middlewares/validateJWT');
 const router = express.Router();
 const controller = require('./controller')
+const storeUser = require('../users/store')
 
 router.get('/',validateJWT(),(req,res)=>{
-    controller.getQuestion(req.query)
+    const user = req.user
+    //console.log(user.points);
+    //console.log(req.query.test);
+    const testAlreadyTaken = user.points.some( element => {
+        return element.test == req.query.test
+    })
+    if(testAlreadyTaken){
+        return res.send("Ya tomaste este examen")
+    }
+    //console.log({testAlreadyTaken});
+    controller.getQuestion(req.query,user)
         .then(questions=>{
-            questions.map( q=>{
+            questions.foundedQuestions.map( q=>{
                 q.response = ""
             } )
             res.send(questions)
@@ -15,7 +26,7 @@ router.get('/',validateJWT(),(req,res)=>{
 });
 router.post('/',validateJWT('teacher'),(req,res)=>{
     const {question,answers,test,response} = req.body;
-    console.log(question,answers,test,response);
+    //console.log(question,answers,test,response);
     controller.addQuestion(question,answers,test,response)
         .then( (questions)=>{
             res.send(questions)
@@ -37,9 +48,9 @@ router.put('/',validateJWT(), async(req,res)=>{
             points++
         }
     })
-    console.log({califications},califications[0].test);
-    controller.addPoints(foundUser._id,points,califications[0].test)
-    res.send(califications)
+    //console.log({califications},califications[0].test);
+    const score = await storeUser.addPoints(foundUser._id,points,califications[0].test)
+    res.send({califications,score})
 });
 router.delete('/',validateJWT('admin'),(req,res)=>{
     controller.deleteQuestion()

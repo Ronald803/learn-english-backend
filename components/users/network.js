@@ -4,7 +4,7 @@ const controller = require('./controller')
 const response = require('../../network/response');
 const { validateJWT } = require('../../middlewares/validateJWT');
 
-router.get('/',validateJWT('admin'),(req,res)=>{
+router.get('/',validateJWT(),(req,res)=>{
     controller.getUser(req.query)
         .then( users =>{
             response.success(req,res,users.length,users,200)
