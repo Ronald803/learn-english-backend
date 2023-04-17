@@ -5,7 +5,13 @@ const response = require('../../network/response');
 const { validateJWT } = require('../../middlewares/validateJWT');
 
 router.get('/',validateJWT(),(req,res)=>{
-    controller.getUser(req.query)
+    let user = req.user
+    console.log(user);
+    let filter
+    if(user.rol==="student"){
+        filter = {_id:user._id}
+    }
+    controller.getUser(filter)
         .then( users =>{
             response.success(req,res,users.length,users,200)
         } )
