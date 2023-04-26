@@ -48,8 +48,18 @@ function deleteUser(id){
     } )
 }
 
-function updateRecord(userID,test){
-    
+function updateTestStatus(userID,t){
+    return new Promise( async (resolve,reject)=>{
+        const student = await store.list({"_id":userID})
+        const pointsTests = student[0].points
+        console.log({pointsTests});
+        const index = pointsTests.findIndex(element=> element.test == t )
+        console.log({t},{index});
+        pointsTests.splice(index,1)
+        console.log({pointsTests});
+        store.updateTestStatusStore(userID,pointsTests)
+        resolve(student)
+    } )
 
 }
-module.exports = {addUser,getUser,updateUser,deleteUser}
+module.exports = {addUser,getUser,updateUser,deleteUser,updateTestStatus}

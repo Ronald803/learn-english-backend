@@ -55,4 +55,10 @@ async function setTestScore(id,object){
     foundUser.points.push(object);
     foundUser.save()
 }
-module.exports = {add,list,update,remove,addPoints,setTestScore}
+
+async function updateTestStatusStore(id,points){
+    const foundUser = await Model.findById(id);
+    foundUser.points = points;
+    foundUser.save()
+}
+module.exports = {add,list,update,remove,addPoints,setTestScore,updateTestStatusStore}

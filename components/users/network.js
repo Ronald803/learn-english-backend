@@ -50,5 +50,14 @@ router.delete('/:id',validateJWT('admin'),(req,res)=>{
             response.error(req,res,"Error interno",500,e)
         })
 })
-
+router.patch('/:id',validateJWT('teacher'),(req,res)=>{
+    const {test} = req.body
+    controller.updateTestStatus(req.params.id,test)
+        .then( testErased=>{
+            response.success(req,res,`Test ${test} nuevamente habilitado para el estudiante`,testErased)
+        })
+        .catch( e=>{
+            response.error(req,res,`Algo salió mal [${e}]`)
+        })
+})
 module.exports = router;
