@@ -26,6 +26,14 @@ const mySchema = new Schema({
     questions: {
         type: Number,
         required: true
+    },
+    type: {
+        type: String,
+        required: true
+    },
+    auxiliar: {
+        type: String,
+        required: false
     }
 })
 

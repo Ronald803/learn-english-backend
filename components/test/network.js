@@ -4,10 +4,10 @@ const router            = express.Router();
 const controller        = require('./controller')
 const response          = require('../../network/response')
 
-router.post('/',validateJWT('teacher'),(req,res)=>{
-    const {name,number,description,level,questions} = req.body
+router.post('/',validateJWT(['teacher','admin']),(req,res)=>{
+    const {name,number,description,level,questions,type,auxiliar} = req.body
     const teacher = req.user.name
-    controller.addTest(name,number,description,level,teacher,questions)
+    controller.addTest(name,number,description,level,teacher,questions,type,auxiliar)
         .then( addedTest => {
             response.success(req,res,"Test añadido correctamente",addedTest,201)
         } )

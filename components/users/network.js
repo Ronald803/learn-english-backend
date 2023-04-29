@@ -4,7 +4,7 @@ const controller = require('./controller')
 const response = require('../../network/response');
 const { validateJWT } = require('../../middlewares/validateJWT');
 
-router.get('/',validateJWT(),(req,res)=>{
+router.get('/',validateJWT(['admin','teacher']),(req,res)=>{
     let user = req.user
     console.log(user);
     let filter
@@ -31,7 +31,7 @@ router.post('/',(req,res)=>{
         })
 })
 
-router.put('/:id',validateJWT(),(req,res)=>{
+router.put('/:id',validateJWT(['admin']),(req,res)=>{
     controller.updateUser(req.params.id,req.body)
         .then(updatedUser=>{
             response.success(req,res,"Información de usuario actualizada correctamente",updatedUser,200)
@@ -41,7 +41,7 @@ router.put('/:id',validateJWT(),(req,res)=>{
         })
 })
 
-router.delete('/:id',validateJWT('admin'),(req,res)=>{
+router.delete('/:id',validateJWT(['admin']),(req,res)=>{
     controller.deleteUser(req.params.id)
         .then( deletedUser=>{
             response.success(req,res,"Usuario eliminado",deletedUser,200)
@@ -50,7 +50,7 @@ router.delete('/:id',validateJWT('admin'),(req,res)=>{
             response.error(req,res,"Error interno",500,e)
         })
 })
-router.patch('/:id',validateJWT('teacher'),(req,res)=>{
+router.patch('/:id',validateJWT(['admin','teacher']),(req,res)=>{
     const {test} = req.body
     controller.updateTestStatus(req.params.id,test)
         .then( testErased=>{

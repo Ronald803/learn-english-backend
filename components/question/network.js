@@ -24,7 +24,7 @@ router.get('/',validateJWT(),(req,res)=>{
         })
         .catch()
 });
-router.post('/',validateJWT('teacher'),(req,res)=>{
+router.post('/',validateJWT(['teacher','admin']),(req,res)=>{
     const {question,answers,test,response} = req.body;
     //console.log(question,answers,test,response);
     controller.addQuestion(question,answers,test,response)
@@ -33,7 +33,7 @@ router.post('/',validateJWT('teacher'),(req,res)=>{
         } )
         .catch()
 });
-router.put('/',validateJWT(), async(req,res)=>{
+router.put('/',validateJWT(['teacher','admin']), async(req,res)=>{
     const token = req.header('x-token')
     const foundUser = req.user
     const {test} = req.body;
@@ -52,7 +52,7 @@ router.put('/',validateJWT(), async(req,res)=>{
     const score = await storeUser.addPoints(foundUser._id,points,califications[0].test)
     res.send({califications,score})
 });
-router.delete('/',validateJWT('admin'),(req,res)=>{
+router.delete('/',validateJWT(['admin']),(req,res)=>{
     controller.deleteQuestion()
         .then( (questions)=>{
             res.send(questions)

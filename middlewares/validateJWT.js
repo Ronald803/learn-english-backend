@@ -2,7 +2,7 @@ const { response,request } = require('express');
 const jwt = require('jsonwebtoken')
 const Model = require('../components/users/model')
 
-const validateJWT = (rol)=>{
+const validateJWT = (rolArray)=>{
     return async (req=request,res=response,next)=>{
         const token = req.header('x-token')
         if(!token){
@@ -19,11 +19,23 @@ const validateJWT = (rol)=>{
                     msg: 'Invalid Token or Disabled User'
                 })
             }
-            if(rol && user.rol !== rol){
+            let permission = false
+            rolArray.map(rol=>{
+                if(rol===user.rol){
+                    permission=true
+                }
+            })
+            // if(rol && user.rol !== rol){
+            //     return res.status(401).json({
+            //         msg: 'You do not have permission for this operation'
+            //     })
+            // }
+            if(!permission){
                 return res.status(401).json({
                     msg: 'You do not have permission for this operation'
                 })
             }
+
             req.user = user;
             next();
         } catch(error) {
