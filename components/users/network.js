@@ -4,7 +4,7 @@ const controller = require('./controller')
 const response = require('../../network/response');
 const { validateJWT } = require('../../middlewares/validateJWT');
 
-router.get('/',validateJWT(['admin','teacher']),(req,res)=>{
+router.get('/',validateJWT(),(req,res)=>{
     let user = req.user
     console.log(user);
     let filter

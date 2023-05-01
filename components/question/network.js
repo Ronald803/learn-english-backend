@@ -33,8 +33,8 @@ router.post('/',validateJWT(['teacher','admin']),(req,res)=>{
         } )
         .catch()
 });
-router.put('/',validateJWT(['teacher','admin']), async(req,res)=>{
-    const token = req.header('x-token')
+router.put('/',validateJWT(), async(req,res)=>{
+    //const token = req.header('x-token')
     const foundUser = req.user
     const {test} = req.body;
     let califications = await Promise.all(
