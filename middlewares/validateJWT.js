@@ -9,7 +9,7 @@ const validateJWT = (rolArray)=>{
         try{
             const { uid } = jwt.verify( token, process.env.SECRETORPRIVATEKEY);
             const user = await Model.findById(uid);
-            console.log({user});
+            //console.log({user});
             if(!user || user.characteristic==='deleted'){
                 return res.status(401).json({
                     msg: 'Invalid Token or Disabled User'
@@ -23,12 +23,6 @@ const validateJWT = (rolArray)=>{
                     }
                 })    
             } else{permission = true}
-            // console.log("pasó map");
-            // if(rol && user.rol !== rol){
-            //     return res.status(401).json({
-            //         msg: 'You do not have permission for this operation'
-            //     })
-            // }
             if(!permission){
                 return res.status(401).json({
                     msg: 'You do not have permission for this operation'
