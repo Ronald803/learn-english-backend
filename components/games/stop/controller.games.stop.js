@@ -24,9 +24,9 @@ function updateRound(id,body,user){
         resolve(answerSaved)
     })
 }
-function getRound(id){
+function getRound(){
     return new Promise((resolve,reject)=>{
-        resolve(store.list(id))
+        resolve(store.list())
     })
 }
 function deleteRound(id){

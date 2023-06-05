@@ -4,8 +4,8 @@ const controller= require('./controller.games.stop');
 const response  = require('../../../network/response');
 const { validateJWT } = require('../../../middlewares/validateJWT');
 
-router.get('/:id',validateJWT(['admin','teacher']),(req,res)=>{
-    controller.getRound(req.params.id)
+router.get('/',validateJWT(),(req,res)=>{
+    controller.getRound()
         .then(round=>{
             response.success(req,res,"Petición Correcta",round,200)
         })
