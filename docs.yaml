@@ -1,0 +1,120 @@
+openapi: 3.0.3
+info:
+  title: API LEARN ENGLISH
+  description: |-
+    This api is used to save information of users like name, grade, email and scores, and to save tests and questions.
+    
+    You can find the app at [https://learn-with-cea.vercel.app/](https://learn-with-cea.vercel.app/). 
+  version: 1.0.0
+servers:
+  - url: https://learn-english-backend-bay.vercel.app/api
+tags:
+  - name: users
+    description: Information about the students and the teachers
+  - name: auth
+    description: This endpoint is used for authentication
+  - name: test
+    description: Information just about the tests
+  - name: question
+    description: This you can find the questions and answers of the tests
+  - name: games/stop
+    description: Here you can save and get the answers of the stop game
+  
+  - name: pet
+    description: Everything about your Pets
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: store
+    description: Access to Petstore orders
+    externalDocs:
+      description: Find out more about our store
+      url: http://swagger.io
+  - name: user
+    description: Operations about user
+paths:
+  /users:
+    post:
+      tags:
+        - users
+      summary: Create a new user and stores the information in the database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BodyUsersPost'
+        required: true
+      responses:
+        201:
+          description: (Ok) The new user has been saved correctly
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExitoUsersPost'
+        500:
+          description: (Error)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      
+components:
+  parameters:
+    token:
+      in: header
+      name: x-token
+      description: Authentication token
+      required: true
+      schema:
+        type: string
+        
+  schemas:
+    BodyUsersPost:
+      type: object
+      properties:
+        name:
+          type: string
+          description: complete name of the student or teacher
+        email:
+          type: string
+          description: email address of the student or teacher 
+        cellphone:
+          type: number
+          description: cellphone number of the student or teacher
+        level:
+          type: string
+          description: could it be "basico" "auxiliar" "medio 1" "medio 2"
+        schedule:
+          type: string
+          description: could it be "mañana" "tarde" "noche"
+        password:
+          type: string
+          description: password that will be required to login
+  
+    ExitoUsersPost:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The message will be "Usuario añadido correctamente"
+          example: Usuario añadido correctamente
+        body:
+          type: object
+          properties:
+            name:
+              type: string
+              description: complete name of the student or teacher
+            rol:
+              type: string
+              description: it will be "student"
+            token:
+              type: string
+              description: this will be required to take the tests
+  
+    BadRequest:
+      type: object
+      properties:
+        error:
+          type: string
+          description: "Información inválida"
+          example: Información inválida
