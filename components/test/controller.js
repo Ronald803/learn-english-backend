@@ -18,9 +18,24 @@ function addTest(name,number,description,level,teacher,questions,type,aux){
     } )
 }
 
-function getTest(){
-    return new Promise( (resolve,reject)=>{
-        resolve( store.list() )
+function getTest(requestingUserScores){
+    return new Promise( async (resolve,reject)=>{
+        let tests = await store.list()
+        if(!requestingUserScores){return resolve(tests)}
+        let testsWithPoints = [];
+        tests.map((test,index)=>{
+            let tookTheTest = false; 
+            let points = null
+            const {_id,name,number,description,level,teacher,questions,auxiliar,type} = test
+            requestingUserScores.map((userScores,ind)=>{
+                if(userScores.test == test.number){
+                    points = Math.ceil((userScores.points*100)/test.questions)
+                }
+            })
+            let testModified = {_id,name,number,description,level,teacher,questions,auxiliar,type,points}
+            testsWithPoints.push(testModified)
+        })
+        resolve( testsWithPoints )
     } )
 }
 

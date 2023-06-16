@@ -5,8 +5,10 @@ const Model = require('../components/users/model')
 const validateJWT = (rolArray)=>{
     return async (req=request,res=response,next)=>{
         const token = req.header('x-token')
-        if(!token){return res.status(401).json({msg: 'There is no token'})}
+        //console.log(rolArray[0]);
         try{
+            if(!token && rolArray[0]=='everybody'){return next()}
+            if(!token){return res.status(401).json({msg: 'There is no token'})}
             const { uid } = jwt.verify( token, process.env.SECRETORPRIVATEKEY);
             const user = await Model.findById(uid);
             //console.log({user});
@@ -14,6 +16,10 @@ const validateJWT = (rolArray)=>{
                 return res.status(401).json({
                     msg: 'Invalid Token or Disabled User'
                 })
+            }
+            if(rolArray[0]=='everybody'){
+                req.user = user;
+                return next();
             }
             let permission = false
             if(rolArray){
