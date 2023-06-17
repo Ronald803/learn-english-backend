@@ -6,7 +6,7 @@ const { validateJWT } = require('../../middlewares/validateJWT');
 
 router.get('/',validateJWT(),(req,res)=>{
     let user = req.user
-    console.log(user);
+    //console.log(user);
     let filter
     if(user.rol==="student"){
         filter = {_id:user._id}

@@ -17,9 +17,11 @@ const validateJWT = (rolArray)=>{
                     msg: 'Invalid Token or Disabled User'
                 })
             }
-            if(rolArray[0]=='everybody'){
-                req.user = user;
-                return next();
+            if(rolArray){
+                if(rolArray[0]=='everybody'){
+                    req.user = user;
+                    return next();
+                }    
             }
             let permission = false
             if(rolArray){
@@ -35,7 +37,6 @@ const validateJWT = (rolArray)=>{
                 })
             }
             req.user = user;
-            
             next();
         } catch(error) {
             res.status(401).json({
