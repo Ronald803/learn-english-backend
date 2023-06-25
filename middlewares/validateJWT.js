@@ -17,7 +17,7 @@ const validateJWT = (rolArray)=>{
                     msg: 'Invalid Token or Disabled User'
                 })
             }
-            if(rolArray){
+            if(rolArray.length>0){
                 if(rolArray[0]=='everybody'){
                     req.user = user;
                     return next();
