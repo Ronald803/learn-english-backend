@@ -4,7 +4,7 @@ const router = express.Router();
 const controller = require('./controller')
 const storeUser = require('../users/store')
 
-router.get('/',validateJWT(),(req,res)=>{
+router.get('/',validateJWT([]),(req,res)=>{
     const user = req.user
     //console.log(user.points);
     //console.log(req.query.test);
