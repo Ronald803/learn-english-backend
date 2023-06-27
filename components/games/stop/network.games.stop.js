@@ -4,7 +4,7 @@ const controller= require('./controller.games.stop');
 const response  = require('../../../network/response');
 const { validateJWT } = require('../../../middlewares/validateJWT');
 
-router.get('/',validateJWT(),(req,res)=>{
+router.get('/',validateJWT([]),(req,res)=>{
     controller.getRound()
         .then(round=>{
             response.success(req,res,"Petición Correcta",round,200)
@@ -23,7 +23,7 @@ router.post('/',validateJWT(['admin','teacher']),(req,res)=>{
             response.error(req,res,'Unexpected Error',500,e)
         })
 })
-router.put('/:id',validateJWT(),(req,res)=>{
+router.put('/:id',validateJWT([]),(req,res)=>{
     controller.updateRound(req.params.id,req.body,req.user)
         .then(updatedRound=>{
             let message

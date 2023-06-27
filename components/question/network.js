@@ -33,7 +33,7 @@ router.post('/',validateJWT(['teacher','admin']),(req,res)=>{
         } )
         .catch()
 });
-router.put('/',validateJWT(), async(req,res)=>{
+router.put('/',validateJWT([]), async(req,res)=>{
     //const token = req.header('x-token')
     const foundUser = req.user
     const {test} = req.body;
