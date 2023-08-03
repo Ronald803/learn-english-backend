@@ -16,7 +16,11 @@ const mySchema = new Schema({
         required: true
     },
     level: {
-        type: String,
+        type: Array,
+        required: true
+    },
+    schedule: {
+        type: Array,
         required: true
     },
     teacher: {
