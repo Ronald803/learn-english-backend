@@ -18,6 +18,8 @@ function login(email,password){
         resolve({
             name: user[0].name,
             rol: user[0].rol,
+            schedule: user[0].schedule,
+            level: user[0].level,
             token
         })
     } )
