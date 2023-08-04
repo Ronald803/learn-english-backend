@@ -1,11 +1,11 @@
 const store = require('./store')
 
-function addTest(name,number,description,level,teacher,questions,type,aux){
+function addTest(name,number,description,level,teacher,questions,type,aux,schedule){
     return new Promise( (resolve,reject)=>{
         let auxiliar
         aux ? auxiliar=aux : auxiliar=""
         const test = {
-            name,number,description,level,teacher,questions,type,auxiliar
+            name,number,description,level,teacher,questions,type,auxiliar,schedule
         };
         for(const property in test){
             if(test[property]===undefined){
