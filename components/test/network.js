@@ -18,9 +18,9 @@ router.post('/',validateJWT(['teacher','admin']),(req,res)=>{
 
 router.get('/',validateJWT(['everybody']),(req,res)=>{
     const requestingUser = req.user;
-    let requestingUserScores = null;
-    if(requestingUser) {requestingUserScores=requestingUser.points}
-    controller.getTest(requestingUserScores)
+    let requestingUserInfo = null;
+    if(requestingUser) {requestingUserInfo=requestingUser}
+    controller.getTest(requestingUserInfo)
         .then(tests=>{
             response.success(req,res,tests.length,tests,200)
         })
